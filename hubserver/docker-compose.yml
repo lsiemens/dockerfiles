@@ -1,0 +1,33 @@
+# Jupyterhub docker-compose configuration
+version: "2"
+
+services:
+  hubserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lsiemens/hubserver
+    container_name: ${DOCKER_MACHINE_NAME}
+    volumes:
+      - "/usr/bin/docker:/usr/bin/docker:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+      - "data:${DATA_VOLUME}:rw"
+    ports:
+      - "443:443"
+    networks:
+      - default
+    environment:
+      DOCKER_NETWORK_NAME: ${DOCKER_NETWORK_NAME}
+      DOCKER_MACHINE_NAME: ${DOCKER_MACHINE_NAME}
+      DATA_VOLUME: ${DATA_VOLUME}
+    command: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py
+
+networks:
+  default:
+    external:
+      name: ${DOCKER_NETWORK_NAME}
+
+volumes:
+  data:
+    external:
+      name: hubserver-data
