@@ -1,2 +1,1 @@
-hubserver docker files for jupyterhub server instance
-
+Dockerfiles for hubserver and userserver

@@ -2,12 +2,12 @@
 version: "2"
 
 services:
-  hubserver:
+  multiuser:
     build:
       context: .
-      dockerfile: Dockerfile_hubserver
-    image: lsiemens/hubserver
-    container_name: ${DOCKER_HUB_NAME}
+      dockerfile: Dockerfile
+    image: lsiemens/multiuser
+    container_name: ${DOCKER_MACHINE_NAME}
     volumes:
       - "/usr/bin/docker:/usr/bin/docker:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
@@ -18,17 +18,9 @@ services:
       - default
     environment:
       DOCKER_NETWORK_NAME: ${DOCKER_NETWORK_NAME}
-      DOCKER_MACHINE_NAME: ${DOCKER_HUB_NAME}
+      DOCKER_MACHINE_NAME: ${DOCKER_MACHINE_NAME}
       DATA_VOLUME: ${DATA_VOLUME}
     command: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py
-  userserver:
-    build:
-      context: .
-      dockerfile: Dockerfile_userserver
-    image: lsiemens/userserver
-    container_name: ${DOCKER_USER_NAME}
-    networks:
-      - default
 
 networks:
   default:

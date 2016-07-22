@@ -9,12 +9,12 @@ config.GitHubOAuthenticator.client_id = 'a4b7e7154c6f9d8497fc'
 config.GitHubOAuthenticator.client_secret = '83784c5306df793900143b8d44aef24a379041ce'
 
 # set of usernames of admin users
-config.Authenticator.admin_users = ["fherwig", "lsiemens"]
+config.Authenticator.admin_users = ["fherwig", "syang", "lsiemens"]
 config.Authenticator.whitelist = config.Authenticator.admin_users
 
 # Spawn users in dockers
 network_name = os.environ["DOCKER_NETWORK_NAME"]
-hub_ip = os.environ["DOCKER_HUB_NAME"]
+hub_ip = os.environ["DOCKER_MACHINE_NAME"]
 config.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 config.DockerSpawner.container_image = "lsiemens/singleuser"
 config.DockerSpawner.use_internal_ip = True
